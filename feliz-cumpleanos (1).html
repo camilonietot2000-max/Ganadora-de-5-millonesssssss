@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>¡Feliz Cumpleaños!</title>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --gold: #FFD700;
+    --pink: #FF6B9D;
+    --purple: #9B59B6;
+    --blue: #3498DB;
+    --orange: #FF8C42;
+    --bg: #1a0533;
+  }
+
+  body {
+    min-height: 100vh;
+    background: var(--bg);
+    font-family: 'Nunito', sans-serif;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .bubbles {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .bubble {
+    position: absolute;
+    bottom: -80px;
+    border-radius: 50%;
+    opacity: 0.15;
+    animation: rise linear infinite;
+  }
+
+  @keyframes rise {
+    0%   { transform: translateY(0) scale(1); opacity: 0.15; }
+    100% { transform: translateY(-110vh) scale(1.3); opacity: 0; }
+  }
+
+  .confetti-wrap {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    overflow: hidden;
+  }
+
+  .conf {
+    position: absolute;
+    top: -20px;
+    width: 10px;
+    height: 14px;
+    border-radius: 2px;
+    animation: fall linear infinite;
+  }
+
+  @keyframes fall {
+    0%   { transform: translateY(0) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(110vh) rotate(720deg); opacity: 0.3; }
+  }
+
+  .card {
+    position: relative;
+    z-index: 10;
+    background: rgba(255,255,255,0.06);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 32px;
+    padding: 60px 70px;
+    text-align: center;
+    max-width: 560px;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.5), 0 0 60px rgba(255,107,157,0.2);
+    animation: cardIn 1s cubic-bezier(0.34,1.56,0.64,1) both;
+  }
+
+  @keyframes cardIn {
+    from { transform: scale(0.5) rotate(-5deg); opacity: 0; }
+    to   { transform: scale(1) rotate(0deg); opacity: 1; }
+  }
+
+  .emoji-top {
+    font-size: 72px;
+    display: block;
+    margin-bottom: 16px;
+    animation: bounce 1.5s ease-in-out infinite;
+  }
+
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50%       { transform: translateY(-12px); }
+  }
+
+  h1 {
+    font-family: 'Pacifico', cursive;
+    font-size: clamp(2.8rem, 8vw, 4.2rem);
+    line-height: 1.1;
+    background: linear-gradient(135deg, var(--gold) 0%, var(--pink) 50%, var(--purple) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 8px;
+    filter: drop-shadow(0 2px 12px rgba(255,107,157,0.5));
+    animation: shimmer 3s linear infinite;
+    background-size: 200% 200%;
+  }
+
+  @keyframes shimmer {
+    0%   { background-position: 0% 50%; }
+    50%  { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  .subtitle {
+    font-size: 1.15rem;
+    color: rgba(255,255,255,0.65);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-bottom: 36px;
+  }
+
+  .cake-row {
+    display: flex;
+    justify-content: center;
+    gap: 18px;
+    margin-bottom: 36px;
+  }
+
+  .candle {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    cursor: pointer;
+  }
+
+  .flame {
+    width: 14px;
+    height: 22px;
+    background: radial-gradient(ellipse at 50% 70%, #fff 0%, var(--gold) 35%, var(--orange) 70%, transparent 100%);
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    animation: flicker 0.6s ease-in-out infinite alternate;
+    filter: drop-shadow(0 0 8px var(--gold));
+    margin-bottom: 2px;
+  }
+
+  @keyframes flicker {
+    from { transform: scaleX(1) scaleY(1) rotate(-3deg); }
+    to   { transform: scaleX(0.85) scaleY(1.1) rotate(3deg); }
+  }
+
+  .candle-body {
+    width: 14px;
+    height: 44px;
+    border-radius: 6px 6px 4px 4px;
+  }
+
+  .btn {
+    display: inline-block;
+    padding: 14px 38px;
+    background: linear-gradient(135deg, var(--pink), var(--purple));
+    color: #fff;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 900;
+    font-size: 1.05rem;
+    letter-spacing: 0.05em;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 8px 28px rgba(155,89,182,0.45);
+    transition: transform 0.2s, box-shadow 0.2s;
+    text-decoration: none;
+  }
+
+  .btn:hover {
+    transform: translateY(-3px) scale(1.04);
+    box-shadow: 0 14px 36px rgba(155,89,182,0.6);
+  }
+
+  .stars {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .star {
+    position: absolute;
+    background: white;
+    border-radius: 50%;
+    animation: twinkle ease-in-out infinite alternate;
+  }
+
+  @keyframes twinkle {
+    from { opacity: 0.1; transform: scale(0.8); }
+    to   { opacity: 0.9; transform: scale(1.2); }
+  }
+</style>
+</head>
+<body>
+
+<div class="stars" id="stars"></div>
+<div class="bubbles" id="bubbles"></div>
+<div class="confetti-wrap" id="confetti"></div>
+
+<div class="card">
+  <span class="emoji-top">🥳</span>
+  <h1>¡Feliz<br>Cumpleaños!</h1>
+  <p class="subtitle">✨ Que sea un día increíble ✨</p>
+
+  <div class="cake-row" id="candles"></div>
+
+  <button class="btn" onclick="burst()">🎉 ¡Sorpresa!</button>
+</div>
+
+<script>
+  // Estrellas
+  const starsEl = document.getElementById('stars');
+  for (let i = 0; i < 80; i++) {
+    const s = document.createElement('div');
+    s.className = 'star';
+    const size = Math.random() * 3 + 1;
+    s.style.cssText = `
+      width:${size}px; height:${size}px;
+      top:${Math.random()*100}%;
+      left:${Math.random()*100}%;
+      animation-duration:${1.5 + Math.random()*3}s;
+      animation-delay:${Math.random()*3}s;
+    `;
+    starsEl.appendChild(s);
+  }
+
+  // Burbujas
+  const bubblesEl = document.getElementById('bubbles');
+  const bColors = ['#FFD700','#FF6B9D','#9B59B6','#3498DB','#FF8C42'];
+  for (let i = 0; i < 18; i++) {
+    const b = document.createElement('div');
+    b.className = 'bubble';
+    const size = 30 + Math.random() * 80;
+    b.style.cssText = `
+      width:${size}px; height:${size}px;
+      left:${Math.random()*100}%;
+      background:${bColors[Math.floor(Math.random()*bColors.length)]};
+      animation-duration:${6 + Math.random()*10}s;
+      animation-delay:${Math.random()*8}s;
+    `;
+    bubblesEl.appendChild(b);
+  }
+
+  // Velas
+  const candleColors = ['#FF6B9D','#FFD700','#9B59B6','#3498DB','#FF8C42'];
+  const candlesEl = document.getElementById('candles');
+  for (let i = 0; i < 5; i++) {
+    candlesEl.innerHTML += `
+      <div class="candle" title="¡Apaga la vela!">
+        <div class="flame" id="flame${i}"></div>
+        <div class="candle-body" style="background:${candleColors[i]}"></div>
+      </div>
+    `;
+  }
+
+  document.querySelectorAll('.candle').forEach((c, i) => {
+    c.addEventListener('click', () => {
+      const f = document.getElementById('flame' + i);
+      f.style.opacity = f.style.opacity === '0' ? '1' : '0';
+      f.style.transition = 'opacity 0.3s';
+    });
+  });
+
+  // Confetti burst
+  function burst() {
+    const wrap = document.getElementById('confetti');
+    wrap.innerHTML = '';
+    const colors = ['#FFD700','#FF6B9D','#9B59B6','#3498DB','#FF8C42','#2ECC71','#E74C3C'];
+    for (let i = 0; i < 90; i++) {
+      const el = document.createElement('div');
+      el.className = 'conf';
+      el.style.cssText = `
+        left:${Math.random()*100}%;
+        background:${colors[Math.floor(Math.random()*colors.length)]};
+        width:${6 + Math.random()*10}px;
+        height:${10 + Math.random()*14}px;
+        border-radius:${Math.random() > 0.5 ? '50%' : '2px'};
+        animation-duration:${2 + Math.random()*3}s;
+        animation-delay:${Math.random()*1}s;
+      `;
+      wrap.appendChild(el);
+    }
+    setTimeout(() => wrap.innerHTML = '', 5000);
+  }
+
+  // Auto-burst al cargar
+  setTimeout(burst, 800);
+</script>
+</body>
+</html>
